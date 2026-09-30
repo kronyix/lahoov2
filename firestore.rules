@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // User profile documents (custom name, role, facility/bloodGroup)
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      // Allow read for authenticated team members to see name/facility
+      allow read: if request.auth != null;
+    }
+
+    match /profiles/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /guardianSettings/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Operational collections sorted by timestamps/priority
+    match /deficits/{deficitId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /shipments/{shipmentId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /credits/{creditId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /communities/{communityId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /impactLedger/{ledgerId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

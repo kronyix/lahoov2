@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Lahoo AI Blood Grid"
+description = "A responsive blood logistics coordination app for rural healthcare teams, blood storage units, and voluntary donors. Includes voice-led emergency dispatch, refrigerator shelf-life telemetry, relay logistics, donor deficit matching, impact ledgers, rare-type alerts, and community drives."
+version = "1.0.0"
+id = "artifacts/laho-ai"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20548
+
+[services.development]
+run = "pnpm --filter @workspace/laho-ai run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/laho-ai", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/laho-ai/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20548"
+BASE_PATH = "/"

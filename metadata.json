@@ -1,0 +1,5 @@
+{
+  "name": "Lahoo AI Blood Grid",
+  "description": "A responsive blood logistics coordination app for rural healthcare teams, blood storage units, and voluntary donors. Includes voice-led emergency dispatch, refrigerator shelf-life telemetry, relay logistics, donor deficit matching, impact ledgers, rare-type alerts, and community drives.",
+  "capabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

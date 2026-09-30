@@ -1,0 +1,96 @@
+[debug] [2026-09-30T15:40:21.725Z] ----------------------------------------------------------------------
+[debug] [2026-09-30T15:40:21.729Z] Command:       /usr/local/bin/node /usr/local/bin/firebase projects:list
+[debug] [2026-09-30T15:40:21.729Z] CLI Version:   15.29.0
+[debug] [2026-09-30T15:40:21.730Z] Platform:      linux
+[debug] [2026-09-30T15:40:21.730Z] Node Version:  v22.23.2
+[debug] [2026-09-30T15:40:21.730Z] Detected Agent: unknown
+[debug] [2026-09-30T15:40:21.731Z] Time:          Wed Sep 30 2026 15:40:21 GMT+0000 (Coordinated Universal Time)
+[debug] [2026-09-30T15:40:21.731Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-09-30T15:40:22.110Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-09-30T15:40:22.146Z] Running auto auth
+[debug] [2026-09-30T15:40:22.176Z] No OAuth tokens found
+[debug] [2026-09-30T15:40:22.178Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=1000
+[debug] [2026-09-30T15:40:22.235Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 403
+[debug] [2026-09-30T15:40:22.235Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[debug] [2026-09-30T15:40:22.235Z] Request to https://firebase.googleapis.com/v1beta1/projects?pageSize=1000 had HTTP Error: 403, Firebase Management API has not been used in project 713457411828 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/firebase.googleapis.com/overview?project=713457411828 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.
+[debug] [2026-09-30T15:40:22.237Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects?pageSize=1000 had HTTP Error: 403, Firebase Management API has not been used in project 713457411828 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/firebase.googleapis.com/overview?project=713457411828 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.
+    at responseToError (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:53:12)
+    at RetryOperation._fn (/usr/local/lib/node_modules/firebase-tools/lib/apiv2.js:415:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+[error] 
+[error] Error: Failed to list Firebase projects. See firebase-debug.log for more info.
+[debug] [2026-09-30T15:40:27.835Z] ----------------------------------------------------------------------
+[debug] [2026-09-30T15:40:27.839Z] Command:       /usr/local/bin/node /usr/local/bin/firebase projects:list
+[debug] [2026-09-30T15:40:27.840Z] CLI Version:   15.29.0
+[debug] [2026-09-30T15:40:27.840Z] Platform:      linux
+[debug] [2026-09-30T15:40:27.840Z] Node Version:  v22.23.2
+[debug] [2026-09-30T15:40:27.840Z] Detected Agent: unknown
+[debug] [2026-09-30T15:40:27.841Z] Time:          Wed Sep 30 2026 15:40:27 GMT+0000 (Coordinated Universal Time)
+[debug] [2026-09-30T15:40:27.841Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-09-30T15:40:28.195Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-09-30T15:40:28.221Z] Running auto auth
+[debug] [2026-09-30T15:40:28.255Z] No OAuth tokens found
+[debug] [2026-09-30T15:40:28.257Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=1000
+[debug] [2026-09-30T15:40:28.331Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 403
+[debug] [2026-09-30T15:40:28.332Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[debug] [2026-09-30T15:40:28.333Z] Request to https://firebase.googleapis.com/v1beta1/projects?pageSize=1000 had HTTP Error: 403, Firebase Management API has not been used in project 713457411828 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/firebase.googleapis.com/overview?project=713457411828 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.
+[debug] [2026-09-30T15:40:28.334Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects?pageSize=1000 had HTTP Error: 403, Firebase Management API has not been used in project 713457411828 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/firebase.googleapis.com/overview?project=713457411828 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.
+    at responseToError (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:53:12)
+    at RetryOperation._fn (/usr/local/lib/node_modules/firebase-tools/lib/apiv2.js:415:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+[error] 
+[error] Error: Failed to list Firebase projects. See firebase-debug.log for more info.
+[debug] [2026-09-30T15:41:24.464Z] ----------------------------------------------------------------------
+[debug] [2026-09-30T15:41:24.469Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only hosting
+[debug] [2026-09-30T15:41:24.470Z] CLI Version:   15.29.0
+[debug] [2026-09-30T15:41:24.470Z] Platform:      linux
+[debug] [2026-09-30T15:41:24.470Z] Node Version:  v22.23.2
+[debug] [2026-09-30T15:41:24.471Z] Detected Agent: unknown
+[debug] [2026-09-30T15:41:24.471Z] Time:          Wed Sep 30 2026 15:41:24 GMT+0000 (Coordinated Universal Time)
+[debug] [2026-09-30T15:41:24.471Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-09-30T15:41:28.354Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-09-30T15:41:28.376Z] Running auto auth
+[debug] [2026-09-30T15:41:28.380Z] [iam] checking project scambee-v2 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-09-30T15:41:28.403Z] No OAuth tokens found
+[debug] [2026-09-30T15:41:28.405Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/scambee-v2:testIamPermissions [none]
+[debug] [2026-09-30T15:41:28.405Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/scambee-v2:testIamPermissions  x-goog-user-project=scambee-v2
+[debug] [2026-09-30T15:41:28.406Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/scambee-v2:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-09-30T15:41:29.411Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/scambee-v2:testIamPermissions 403
+[debug] [2026-09-30T15:41:29.411Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/scambee-v2:testIamPermissions {"error":{"code":403,"message":"Caller does not have required permission to use project scambee-v2. Grant the caller the roles/serviceusage.serviceUsageConsumer role, or a custom role with the serviceusage.services.use permission, by visiting https://console.developers.google.com/iam-admin/iam?project=scambee-v2 and then retry. Propagation of the new permission may take a few minutes.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"USER_PROJECT_DENIED","domain":"googleapis.com","metadata":{"consoleUrl":"https://console.developers.google.com/iam-admin/iam?project=scambee-v2","containerInfo":"scambee-v2","consumer":"projects/scambee-v2","service":"cloudresourcemanager.googleapis.com"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Caller does not have required permission to use project scambee-v2. Grant the caller the roles/serviceusage.serviceUsageConsumer role, or a custom role with the serviceusage.services.use permission, by visiting https://console.developers.google.com/iam-admin/iam?project=scambee-v2 and then retry. Propagation of the new permission may take a few minutes."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developer console IAM admin","url":"https://console.developers.google.com/iam-admin/iam?project=scambee-v2"}]}]}}
+[debug] [2026-09-30T15:41:29.412Z] [iam] error while checking permissions, command may fail: Request to https://cloudresourcemanager.googleapis.com/v1/projects/scambee-v2:testIamPermissions had HTTP Error: 403, Caller does not have required permission to use project scambee-v2. Grant the caller the roles/serviceusage.serviceUsageConsumer role, or a custom role with the serviceusage.services.use permission, by visiting https://console.developers.google.com/iam-admin/iam?project=scambee-v2 and then retry. Propagation of the new permission may take a few minutes.
+[debug] [2026-09-30T15:41:29.413Z] No OAuth tokens found
+[debug] [2026-09-30T15:41:29.413Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/scambee-v2 [none]
+[debug] [2026-09-30T15:41:29.498Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/scambee-v2 403
+[debug] [2026-09-30T15:41:29.499Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/scambee-v2 {"error":{"code":403,"message":"Firebase Management API has not been used in project 713457411828 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/firebase.googleapis.com/overview?project=713457411828 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"activationUrl":"https://console.developers.google.com/apis/api/firebase.googleapis.com/overview?project=713457411828","service":"firebase.googleapis.com","serviceTitle":"Firebase Management API","consumer":"projects/713457411828","containerInfo":"713457411828"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Firebase Management API has not been used in project 713457411828 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/firebase.googleapis.com/overview?project=713457411828 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/firebase.googleapis.com/overview?project=713457411828"}]}]}}
+[debug] [2026-09-30T15:41:29.499Z] Request to https://firebase.googleapis.com/v1beta1/projects/scambee-v2 had HTTP Error: 403, Firebase Management API has not been used in project 713457411828 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/firebase.googleapis.com/overview?project=713457411828 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.
+[debug] [2026-09-30T15:41:29.500Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/scambee-v2 had HTTP Error: 403, Firebase Management API has not been used in project 713457411828 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/firebase.googleapis.com/overview?project=713457411828 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.
+    at responseToError (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:53:12)
+    at RetryOperation._fn (/usr/local/lib/node_modules/firebase-tools/lib/apiv2.js:415:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+[error] 
+[error] Error: Failed to get Firebase project scambee-v2. Please make sure the project exists and your account has permission to access it.
+[debug] [2026-09-30T15:41:37.398Z] ----------------------------------------------------------------------
+[debug] [2026-09-30T15:41:37.402Z] Command:       /usr/local/bin/node /usr/local/bin/firebase projects:list
+[debug] [2026-09-30T15:41:37.402Z] CLI Version:   15.29.0
+[debug] [2026-09-30T15:41:37.403Z] Platform:      linux
+[debug] [2026-09-30T15:41:37.403Z] Node Version:  v22.23.2
+[debug] [2026-09-30T15:41:37.403Z] Detected Agent: unknown
+[debug] [2026-09-30T15:41:37.403Z] Time:          Wed Sep 30 2026 15:41:37 GMT+0000 (Coordinated Universal Time)
+[debug] [2026-09-30T15:41:37.404Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-09-30T15:41:37.777Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-09-30T15:41:37.800Z] Running auto auth
+[debug] [2026-09-30T15:41:37.834Z] No OAuth tokens found
+[debug] [2026-09-30T15:41:37.835Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=1000
+[debug] [2026-09-30T15:41:37.910Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 403
+[debug] [2026-09-30T15:41:37.910Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[debug] [2026-09-30T15:41:37.911Z] Request to https://firebase.googleapis.com/v1beta1/projects?pageSize=1000 had HTTP Error: 403, Firebase Management API has not been used in project 713457411828 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/firebase.googleapis.com/overview?project=713457411828 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.
+[debug] [2026-09-30T15:41:37.914Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects?pageSize=1000 had HTTP Error: 403, Firebase Management API has not been used in project 713457411828 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/firebase.googleapis.com/overview?project=713457411828 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.
+    at responseToError (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:53:12)
+    at RetryOperation._fn (/usr/local/lib/node_modules/firebase-tools/lib/apiv2.js:415:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+[error] 
+[error] Error: Failed to list Firebase projects. See firebase-debug.log for more info.

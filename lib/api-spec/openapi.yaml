@@ -1,0 +1,559 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: Google Cloud Functions API for Lahoo AI blood logistics.
+servers:
+  - url: /api
+    description: Firebase Hosting rewrite to the Google Cloud Functions API
+tags:
+  - name: health
+    description: Health operations
+  - name: operations
+    description: Healthcare worker logistics and inventory
+  - name: donor
+    description: Donor grid, availability, and community activity
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /profiles/me:
+    get:
+      operationId: getMyProfile
+      tags: [operations, donor]
+      summary: Get the signed-in user's Lahoo profile
+      responses:
+        "200":
+          description: Current profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+    put:
+      operationId: saveMyProfile
+      tags: [operations, donor]
+      summary: Create or update the signed-in user's profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserProfileInput"
+      responses:
+        "200":
+          description: Saved profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+  /dashboard:
+    get:
+      operationId: getDashboard
+      tags: [operations, donor]
+      summary: Get the role-specific command dashboard
+      parameters:
+        - name: role
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [worker, donor]
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+  /inventory:
+    get:
+      operationId: getInventory
+      tags: [operations]
+      summary: List blood inventory and shelf-life telemetry
+      responses:
+        "200":
+          description: Inventory units
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InventoryUnit"
+  /inventory/{unitId}:
+    get:
+      operationId: getInventoryUnit
+      tags: [operations]
+      summary: Get a unit's batch and cold-chain history
+      parameters:
+        - name: unitId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Unit detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryUnit"
+  /emergency-requests:
+    post:
+      operationId: createEmergencyRequest
+      tags: [operations]
+      summary: Dispatch a confirmed emergency blood request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmergencyRequestInput"
+      responses:
+        "201":
+          description: Emergency request created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmergencyRequest"
+  /shipments:
+    get:
+      operationId: getShipments
+      tags: [operations]
+      summary: List active multi-hop shipments and transit telemetry
+      responses:
+        "200":
+          description: Active shipments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Shipment"
+  /shipments/{shipmentId}/reroute:
+    post:
+      operationId: rerouteShipment
+      tags: [operations]
+      summary: Reroute a shipment to an approved destination
+      parameters:
+        - name: shipmentId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShipmentRerouteInput"
+      responses:
+        "200":
+          description: Updated shipment route
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Shipment"
+  /credit-ledger:
+    get:
+      operationId: getCreditLedger
+      tags: [operations]
+      summary: List emergency credit obligations
+      responses:
+        "200":
+          description: Credit ledger entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CreditEntry"
+  /credit-ledger/{creditId}/voucher:
+    post:
+      operationId: createCreditVoucher
+      tags: [operations]
+      summary: Create a WhatsApp replacement-credit voucher
+      parameters:
+        - name: creditId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Voucher and WhatsApp deep link
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WhatsAppVoucher"
+  /deficits:
+    get:
+      operationId: getDeficits
+      tags: [donor]
+      summary: List blood-grid deficits by proximity scope
+      parameters:
+        - name: scope
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [district, state, rare]
+      responses:
+        "200":
+          description: Matching grid deficits
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Deficit"
+  /deficits/{deficitId}/claim:
+    post:
+      operationId: claimDeficit
+      tags: [donor]
+      summary: Reserve a deficit and donation appointment
+      parameters:
+        - name: deficitId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeficitClaimInput"
+      responses:
+        "201":
+          description: Claim and available appointment slots
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeficitClaim"
+  /impact-timeline:
+    get:
+      operationId: getImpactTimeline
+      tags: [donor]
+      summary: Get a donor's privacy-blinded impact history
+      responses:
+        "200":
+          description: Impact timeline
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ImpactEvent"
+  /guardian:
+    get:
+      operationId: getGuardianSettings
+      tags: [donor]
+      summary: Get a donor's rare-type Guardian settings
+      responses:
+        "200":
+          description: Guardian settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GuardianSettings"
+    put:
+      operationId: updateGuardianSettings
+      tags: [donor]
+      summary: Update opt-in rare-type alert settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GuardianSettingsInput"
+      responses:
+        "200":
+          description: Updated Guardian settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GuardianSettings"
+  /communities:
+    get:
+      operationId: getCommunities
+      tags: [donor]
+      summary: List donor community sovereignty rings
+      responses:
+        "200":
+          description: Donor communities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Community"
+  /drives:
+    post:
+      operationId: createCommunityDrive
+      tags: [donor]
+      summary: Adopt a blood storage unit for a community
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommunityDriveInput"
+      responses:
+        "201":
+          description: Community drive created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Community"
+  /voice-intents:
+    post:
+      operationId: transcribeEmergencyIntent
+      tags: [operations]
+      summary: Transcribe and structure a regional-language emergency request
+      description: Audio is processed by Google Cloud Speech-to-Text and Vertex AI; the user must confirm before dispatch.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AudioIntentInput"
+      responses:
+        "200":
+          description: Reviewed transcription and structured request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VoiceIntent"
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    UserProfile:
+      type: object
+      properties:
+        role: { type: string, enum: [worker, donor] }
+        displayName: { type: string }
+        city: { type: string }
+        facilityName: { type: ["string", "null"] }
+        communityName: { type: ["string", "null"] }
+        workerVerified: { type: boolean }
+      required: [role, displayName, city, facilityName, communityName, workerVerified]
+    UserProfileInput:
+      type: object
+      properties:
+        role: { type: string, enum: [worker, donor] }
+        displayName: { type: string, minLength: 2, maxLength: 100 }
+        city: { type: string, minLength: 2, maxLength: 100 }
+        facilityName: { type: string, maxLength: 160 }
+        communityName: { type: string, maxLength: 160 }
+        workerInviteCode: { type: string, maxLength: 100 }
+      required: [role, displayName, city]
+    DashboardSummary:
+      type: object
+      properties:
+        role: { type: string, enum: [worker, donor] }
+        averageDispatchMinutes: { type: number }
+        activeRequests: { type: integer }
+        activeNodes: { type: integer }
+        coldChainIntegrity: { type: number }
+        wastagePreventedLiters: { type: number }
+        openDeficits: { type: integer }
+        livesImpacted: { type: integer }
+      required: [role, averageDispatchMinutes, activeRequests, activeNodes, coldChainIntegrity, wastagePreventedLiters, openDeficits, livesImpacted]
+    TemperatureReading:
+      type: object
+      properties:
+        recordedAt: { type: string, format: date-time }
+        temperatureC: { type: number }
+      required: [recordedAt, temperatureC]
+    InventoryUnit:
+      type: object
+      properties:
+        id: { type: string }
+        bloodGroup: { type: string }
+        collectedAt: { type: string, format: date-time }
+        expiresAt: { type: string, format: date-time }
+        daysRemaining: { type: integer }
+        origin: { type: string }
+        temperatureC: { type: number }
+        risk: { type: string, enum: [safe, watch, critical] }
+        status: { type: string }
+        temperatureLog:
+          type: array
+          items: { $ref: "#/components/schemas/TemperatureReading" }
+      required: [id, bloodGroup, collectedAt, expiresAt, daysRemaining, origin, temperatureC, risk, status, temperatureLog]
+    EmergencyRequestInput:
+      type: object
+      properties:
+        bloodGroup: { type: string }
+        units: { type: integer, minimum: 1, maximum: 10 }
+        urgency: { type: string, enum: [critical, urgent, routine] }
+        clinicalSummary: { type: string, maxLength: 280 }
+        destination: { type: string }
+      required: [bloodGroup, units, urgency, clinicalSummary, destination]
+    EmergencyRequest:
+      allOf:
+        - $ref: "#/components/schemas/EmergencyRequestInput"
+        - type: object
+          properties:
+            id: { type: string }
+            status: { type: string }
+            createdAt: { type: string, format: date-time }
+          required: [id, status, createdAt]
+    RelayStage:
+      type: object
+      properties:
+        label: { type: string }
+        status: { type: string, enum: [complete, active, pending] }
+        etaMinutes: { type: integer }
+      required: [label, status, etaMinutes]
+    Shipment:
+      type: object
+      properties:
+        id: { type: string }
+        requestId: { type: string }
+        bloodGroup: { type: string }
+        units: { type: integer }
+        origin: { type: string }
+        destination: { type: string }
+        status: { type: string }
+        temperatureC: { type: number }
+        stages:
+          type: array
+          items: { $ref: "#/components/schemas/RelayStage" }
+      required: [id, requestId, bloodGroup, units, origin, destination, status, temperatureC, stages]
+    ShipmentRerouteInput:
+      type: object
+      properties:
+        destination: { type: string, minLength: 2, maxLength: 160 }
+        reason: { type: string, maxLength: 280 }
+      required: [destination, reason]
+    CreditEntry:
+      type: object
+      properties:
+        id: { type: string }
+        clinic: { type: string }
+        bloodGroup: { type: string }
+        units: { type: integer }
+        status: { type: string, enum: [open, matched, settled] }
+        createdAt: { type: string, format: date-time }
+      required: [id, clinic, bloodGroup, units, status, createdAt]
+    WhatsAppVoucher:
+      type: object
+      properties:
+        message: { type: string }
+        deepLink: { type: string, format: uri }
+        referenceCode: { type: string }
+      required: [message, deepLink, referenceCode]
+    Deficit:
+      type: object
+      properties:
+        id: { type: string }
+        story: { type: string }
+        location: { type: string }
+        bloodGroup: { type: string }
+        units: { type: integer }
+        distanceKm: { type: number }
+        urgency: { type: string, enum: [critical, urgent, routine] }
+        expiresAt: { type: string, format: date-time }
+        donationHub: { type: string }
+      required: [id, story, location, bloodGroup, units, distanceKm, urgency, expiresAt, donationHub]
+    DeficitClaimInput:
+      type: object
+      properties:
+        appointmentAt: { type: string, format: date-time }
+        donationHub: { type: string }
+      required: [appointmentAt, donationHub]
+    DeficitClaim:
+      type: object
+      properties:
+        id: { type: string }
+        status: { type: string }
+        lockedUntil: { type: string, format: date-time }
+        confirmationMessage: { type: string }
+      required: [id, status, lockedUntil, confirmationMessage]
+    ImpactEvent:
+      type: object
+      properties:
+        id: { type: string }
+        occurredAt: { type: string, format: date-time }
+        title: { type: string }
+        detail: { type: string }
+        location: { type: string }
+        bloodGroup: { type: string }
+        status: { type: string }
+      required: [id, occurredAt, title, detail, location, bloodGroup, status]
+    GuardianSettings:
+      type: object
+      properties:
+        active: { type: boolean }
+        radiusKm: { type: integer, minimum: 1, maximum: 100 }
+        startTime: { type: string }
+        endTime: { type: string }
+        bloodGroups:
+          type: array
+          items: { type: string }
+      required: [active, radiusKm, startTime, endTime, bloodGroups]
+    GuardianSettingsInput:
+      type: object
+      properties:
+        active: { type: boolean }
+        radiusKm: { type: integer, minimum: 1, maximum: 100 }
+        startTime: { type: string }
+        endTime: { type: string }
+        bloodGroups:
+          type: array
+          items: { type: string }
+      required: [active, radiusKm, startTime, endTime, bloodGroups]
+    Community:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        members: { type: integer }
+        deficitsSettled: { type: integer }
+        wastagePreventedLiters: { type: number }
+        progressPercent: { type: integer, minimum: 0, maximum: 100 }
+        adoptedBsu: { type: string }
+      required: [id, name, members, deficitsSettled, wastagePreventedLiters, progressPercent, adoptedBsu]
+    CommunityDriveInput:
+      type: object
+      properties:
+        communityName: { type: string, minLength: 2, maxLength: 120 }
+        adoptedBsu: { type: string, minLength: 2, maxLength: 160 }
+      required: [communityName, adoptedBsu]
+    AudioIntentInput:
+      type: object
+      properties:
+        audioBase64: { type: string, minLength: 16 }
+        languageCode: { type: string, minLength: 2, maxLength: 16 }
+        contentType: { type: string }
+      required: [audioBase64, languageCode, contentType]
+    VoiceIntent:
+      type: object
+      properties:
+        transcript: { type: string }
+        languageCode: { type: string }
+        bloodGroup: { type: string }
+        units: { type: integer }
+        urgency: { type: string, enum: [critical, urgent, routine] }
+        clinicalSummary: { type: string }
+        requiresConfirmation: { type: boolean }
+      required: [transcript, languageCode, bloodGroup, units, urgency, clinicalSummary, requiresConfirmation]
+

@@ -1,0 +1,362 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with role and facility association",
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["worker", "donor"]
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "city": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "facilityName": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "communityName": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "workerVerified": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["role", "displayName", "workerVerified"]
+    },
+    "GuardianSettings": {
+      "title": "GuardianSettings",
+      "description": "Privacy-preserving local alert preferences for blood donors",
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "radiusKm": {
+          "type": "number"
+        },
+        "startTime": {
+          "type": "string",
+          "pattern": "^[0-2][0-9]:[0-5][0-9]$"
+        },
+        "endTime": {
+          "type": "string",
+          "pattern": "^[0-2][0-9]:[0-5][0-9]$"
+        },
+        "bloodGroups": {
+          "type": "array"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["active", "radiusKm", "startTime", "endTime"]
+    },
+    "InventoryUnit": {
+      "title": "InventoryUnit",
+      "description": "Monitored blood storage unit with temperature telemetry",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "bloodGroup": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "collectedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "daysRemaining": {
+          "type": "number"
+        },
+        "origin": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "temperatureC": {
+          "type": "number"
+        },
+        "risk": {
+          "type": "string",
+          "enum": ["safe", "watch", "critical"]
+        },
+        "status": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": ["id", "bloodGroup", "origin", "temperatureC", "risk", "status"]
+    },
+    "EmergencyRequest": {
+      "title": "EmergencyRequest",
+      "description": "Emergency blood dispatch request from a healthcare facility",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "bloodGroup": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "units": {
+          "type": "number"
+        },
+        "urgency": {
+          "type": "string",
+          "enum": ["critical", "urgent", "routine"]
+        },
+        "clinicalSummary": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "destination": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "status": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "bloodGroup", "units", "urgency", "destination", "status"]
+    },
+    "Shipment": {
+      "title": "Shipment",
+      "description": "Multimodal relay shipment tracking between blood storage nodes",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "requestId": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "bloodGroup": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "units": {
+          "type": "number"
+        },
+        "origin": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "destination": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "status": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "temperatureC": {
+          "type": "number"
+        }
+      },
+      "required": ["id", "requestId", "bloodGroup", "units", "origin", "destination", "status"]
+    },
+    "CreditEntry": {
+      "title": "CreditEntry",
+      "description": "Sovereign replacement credit ledger tracking clinic obligations",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "clinic": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "bloodGroup": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "units": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["open", "matched", "settled"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "clinic", "bloodGroup", "units", "status"]
+    },
+    "Deficit": {
+      "title": "Deficit",
+      "description": "Local blood deficit needing community replacement or donor contribution",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "story": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "location": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "bloodGroup": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "units": {
+          "type": "number"
+        },
+        "distanceKm": {
+          "type": "number"
+        },
+        "urgency": {
+          "type": "string",
+          "enum": ["critical", "urgent", "routine"]
+        },
+        "donationHub": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "scope": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": ["id", "story", "location", "bloodGroup", "units", "urgency", "donationHub"]
+    },
+    "ImpactEvent": {
+      "title": "ImpactEvent",
+      "description": "Audit event recording blood delivery or deficit settlement",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "detail": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "location": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "bloodGroup": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "status": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": ["id", "title", "detail", "location", "status"]
+    },
+    "Community": {
+      "title": "Community",
+      "description": "Community blood drive circle supporting adopted rural BSUs",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "members": {
+          "type": "number"
+        },
+        "deficitsSettled": {
+          "type": "number"
+        },
+        "wastagePreventedLiters": {
+          "type": "number"
+        },
+        "progressPercent": {
+          "type": "number"
+        },
+        "adoptedBsu": {
+          "type": "string",
+          "maxLength": 150
+        }
+      },
+      "required": ["id", "name", "members", "progressPercent", "adoptedBsu"]
+    }
+  },
+  "firestore": {
+    "/profiles/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profiles with roles and facility mappings"
+    },
+    "/guardianSettings/{userId}": {
+      "schema": "GuardianSettings",
+      "description": "Privacy-preserving donor alert settings"
+    },
+    "/inventory/{unitId}": {
+      "schema": "InventoryUnit",
+      "description": "Real-time monitored blood inventory units"
+    },
+    "/emergencyRequests/{requestId}": {
+      "schema": "EmergencyRequest",
+      "description": "Emergency blood dispatch requests"
+    },
+    "/shipments/{shipmentId}": {
+      "schema": "Shipment",
+      "description": "Multistage relay shipment status"
+    },
+    "/creditLedger/{creditId}": {
+      "schema": "CreditEntry",
+      "description": "Clinic blood credit ledger"
+    },
+    "/deficits/{deficitId}": {
+      "schema": "Deficit",
+      "description": "Local deficits needing voluntary donors"
+    },
+    "/impactEvents/{eventId}": {
+      "schema": "ImpactEvent",
+      "description": "Audited delivery and settlement impact timeline"
+    },
+    "/communities/{communityId}": {
+      "schema": "Community",
+      "description": "Community blood circles and drives"
+    }
+  }
+}
